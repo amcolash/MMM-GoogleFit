@@ -32,7 +32,7 @@ https://www.googleapis.com/fitness/v1/users/me/dataset:aggregate
         "dataTypeName": "com.google.weight",
         "dataSourceId": "derived:com.google.weight:com.google.android.gms:merge_weight"
     }
-    ],
+  ],
   "bucketByTime": { "durationMillis": 86400000 },
   "startTimeMillis": 1438705622000,
   "endTimeMillis": 1439310422000
