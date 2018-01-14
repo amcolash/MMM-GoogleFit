@@ -12,6 +12,8 @@ module.exports = NodeHelper.create({
     //refresh_token
   },
 
+  debug: true,
+
   tmpAuthData: undefined,
   tmpAccessToken: undefined,
 
@@ -44,6 +46,12 @@ module.exports = NodeHelper.create({
       } else {
         self.sendSocketNotification("AUTH_CODE_ERROR", response);
       }
+
+      if (self.debug) {
+        console.error(error);
+        console.error(response);
+        console.error(body);
+      }
     });
   },
 
@@ -62,8 +70,15 @@ module.exports = NodeHelper.create({
 
         self.getAccessToken();
       } else {
+        console.error(response)
         self.sendSocketNotification("REFRESH_TOKEN_ERROR", response);
         setTimeout(function() { self.getRefreshToken() }, 10000);
+      }
+
+      if (self.debug) {
+        console.error(error);
+        console.error(response);
+        console.error(body);
       }
     });
   },
@@ -82,6 +97,12 @@ module.exports = NodeHelper.create({
         self.getStats();
       } else {
         self.sendSocketNotification("ACCESS_TOKEN_ERROR", response);
+      }
+
+      if (self.debug) {
+        console.error(error);
+        console.error(response);
+        console.error(body);
       }
     });
   },
