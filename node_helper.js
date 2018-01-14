@@ -20,6 +20,10 @@ module.exports = NodeHelper.create({
   start: function () {
     console.log("MMM-GoogleFit helper started...");
 
+    if (this.debug) {
+      console.log(process.versions);
+    }
+
     try {
       var c = jsonfile.readFileSync(dataFile);
       if (c.refresh_token) {

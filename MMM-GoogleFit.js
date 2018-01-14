@@ -8,6 +8,9 @@ Module.register("MMM-GoogleFit", {
     updateInterval: 30, // minutes
     imperial: true,
     stepGoal: 10000,
+    chartWidth: 300, // px
+    fontSize: 18,
+    useIcons: true,
     colors: [
       "#EEEEEE",
       "#1E88E5",
@@ -16,8 +19,6 @@ Module.register("MMM-GoogleFit", {
       "#FFB300",
       "#F4511E"
     ],
-    width: 300, // px
-    fontSize: 18,
     debug: false
   },
 
@@ -46,6 +47,12 @@ Module.register("MMM-GoogleFit", {
       var weights = [];
       var steps = [];
       var dates = [];
+      var hasWeights = false;
+
+      var numDays = this.stats.bucket.length; // should be 7
+      if (numDays !== 7) {
+        console.error("Google Fit data fetched does not match 7 days, layout might be incorrect");
+      }
 
       for (var i = 0; i < this.stats.bucket.length; i++) {
         var bucket = this.stats.bucket[i];
@@ -112,7 +119,7 @@ Module.register("MMM-GoogleFit", {
         console.log(dates);
       }
 
-      var totalSize = this.config.width / 7;
+      var totalSize = this.config.chartWidth / numDays;
       var chartSize = totalSize * 0.6;
       var colors = this.config.colors;
 
@@ -149,17 +156,31 @@ Module.register("MMM-GoogleFit", {
           borderColor: null,
         });
       }
+
+      // Add in walking icon
+      if (this.config.useIcons) {
+        var label = document.createElement("div");
+        label.style = "float: left; width: " + totalSize + "px; text-align: center; line-height: 0px; padding-top: " + (totalSize / 2 - 10) + "px"; // 10 is 1/2 of 20px tall icon
+
+        var img = document.createElement("img");
+        img.src = this.file("icons8-walking-20.png");
+
+        label.appendChild(img);
+        wrapper.appendChild(label);
+      }
         
       // Create chart canvas
       var chart = document.createElement("div");
+      chart.id = "google-fit-chart";
+      chart.style = "float: right;";
       
       Highcharts.chart(chart, {
         title: {
           text: null
         },
         chart: {
-          width: this.config.width,
-          height: this.config.width / 7,
+          width: this.config.chartWidth,
+          height: this.config.chartWidth / numDays,
           backgroundColor: null,
           plotShadow: false,
         },
@@ -179,17 +200,40 @@ Module.register("MMM-GoogleFit", {
       // Append chart
       wrapper.appendChild(chart);
 
+      var clear = document.createElement("div");
+      clear.style = "clear: both;";
+      wrapper.appendChild(clear);
+
       var labels = document.createElement("div");
-      for (var i = 0; i < 7; i++) {
+
+      for (var i = 0; i < weights.length; i++) {
+        hasWeights |= weights[i];
+      }
+
+      // Only show the scale icon if there are weights to be shown
+      if (hasWeights && this.config.useIcons) {
         var label = document.createElement("div");
-        var style = "float: left; width: " + (this.config.width / 7) + "px; font-size: " + this.config.fontSize + "px; text-align: center;";
-        label.style = style;
-        // label.innerHTML = (steps[i] / this.config.stepGoal * 100).toFixed(0) + "%";
-        var days = ["S", "M", "T", "W", "T", "F", "S"];
+        label.style = "float: left; width: " + totalSize + "px; font-size: " + this.config.fontSize + "px; text-align: center; padding-top: 4px";
+
+        var br = document.createElement("span");
+        br.innerHTML = "<br>";
+        
+        var img = document.createElement("img");
+        img.src = this.file("icons8-scale-20.png");
+
+        label.appendChild(br);
+        label.appendChild(img);
+        labels.appendChild(label);
+      }
+
+      var days = ["S", "M", "T", "W", "T", "F", "S"];
+      for (var i = 0; i < numDays; i++) {
+        var label = document.createElement("div");
+        label.style = "float: left; width: " + totalSize + "px; font-size: " + this.config.fontSize + "px; text-align: center;";
         label.innerHTML = days[i];
 
         if (weights[i]) {
-          label.innerHTML += "<br>" + weights[i]
+          label.innerHTML += "<br>" + weights[i];
         }
 
         labels.appendChild(label);
