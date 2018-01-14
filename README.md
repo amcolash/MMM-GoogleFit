@@ -2,11 +2,14 @@
 A magic mirror module to grab google fit daily step count and daily weights.
 
 ## What it Looks Like
-Normal Usage:
+Normal Usage:<br>
+![Normal use screenshot](https://raw.githubusercontent.com/amcolash/MMM-GoogleFit/master/screenshots/normal.png)
 
-Colored Rings (each new color means 1x base step count)
+<br>Colored Rings (each new color means 1x base step count):<br>
+![Colored rings screenshot](https://raw.githubusercontent.com/amcolash/MMM-GoogleFit/master/screenshots/colors.png)
 
-Authentication Flow
+<br>Authentication Flow:<br>
+![Authentication screenshot](https://raw.githubusercontent.com/amcolash/MMM-GoogleFit/master/screenshots/auth.png)
 
 ## Installing
 This module is pretty simple to set up. You simply need to clone the module into your modules folder (like other modules).
