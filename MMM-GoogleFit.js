@@ -205,6 +205,7 @@ Module.register("MMM-GoogleFit", {
       wrapper.appendChild(clear);
 
       var labels = document.createElement("div");
+      labels.style = "float: right;";
 
       for (var i = 0; i < weights.length; i++) {
         hasWeights |= weights[i];
@@ -247,7 +248,7 @@ Module.register("MMM-GoogleFit", {
       wrapper.appendChild(elem);
     } else if (this.auth) {
       var elem = document.createElement("span");
-      elem.innerHTML = "Authenticated, Loading Data";
+      elem.innerHTML = "Authenticated, Loading Data...";
       wrapper.appendChild(elem);
     } else {
       var error = document.createElement("span");
