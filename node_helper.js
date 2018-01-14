@@ -47,13 +47,7 @@ module.exports = NodeHelper.create({
         self.sendSocketNotification("AUTH_CODE_ERROR", response);
       }
 
-      if (self.debug) {
-        console.log("getAuthCode");
-        console.log("---------------------------------------------------------------------------------------------");
-        console.log(error);
-        console.log(response);
-        console.log(body);
-      }
+      self.logRequest(error, response, body);
     });
   },
 
@@ -77,13 +71,7 @@ module.exports = NodeHelper.create({
         setTimeout(function() { self.getRefreshToken() }, 10000);
       }
 
-      if (self.debug) {
-        console.log("getAuthCode");
-        console.log("---------------------------------------------------------------------------------------------");
-        console.log(error);
-        console.log(response);
-        console.log(body);
-      }
+      self.logRequest(error, response, body);
     });
   },
 
@@ -103,14 +91,18 @@ module.exports = NodeHelper.create({
         self.sendSocketNotification("ACCESS_TOKEN_ERROR", response);
       }
 
-      if (self.debug) {
-        console.log("getAuthCode");
-        console.log("---------------------------------------------------------------------------------------------");
-        console.log(error);
-        console.log(response);
-        console.log(body);
-      }
+      self.logRequest(error, response, body);
     });
+  },
+
+  logRequest: function(error, response, body) {
+    if (self.debug) {
+      console.log("getAuthCode");
+      console.log("---------------------------------------------------------------------------------------------");
+      console.log(error);
+      console.log(response);
+      console.log(body);
+    }
   },
 
   getStats: function (url) {
