@@ -96,11 +96,14 @@ module.exports = NodeHelper.create({
   },
 
   logRequest: function(error, response, body) {
-    if (self.debug) {
+    if (this.debug) {
       console.log("getAuthCode");
       console.log("---------------------------------------------------------------------------------------------");
+      console.log("error");
       console.log(error);
+      console.log("response");
       console.log(response);
+      console.log("body");
       console.log(body);
     }
   },
