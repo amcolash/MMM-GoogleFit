@@ -48,9 +48,11 @@ module.exports = NodeHelper.create({
       }
 
       if (self.debug) {
-        console.error(error);
-        console.error(response);
-        console.error(body);
+        console.log("getAuthCode");
+        console.log("---------------------------------------------------------------------------------------------");
+        console.log(error);
+        console.log(response);
+        console.log(body);
       }
     });
   },
@@ -76,9 +78,11 @@ module.exports = NodeHelper.create({
       }
 
       if (self.debug) {
-        console.error(error);
-        console.error(response);
-        console.error(body);
+        console.log("getAuthCode");
+        console.log("---------------------------------------------------------------------------------------------");
+        console.log(error);
+        console.log(response);
+        console.log(body);
       }
     });
   },
@@ -100,9 +104,11 @@ module.exports = NodeHelper.create({
       }
 
       if (self.debug) {
-        console.error(error);
-        console.error(response);
-        console.error(body);
+        console.log("getAuthCode");
+        console.log("---------------------------------------------------------------------------------------------");
+        console.log(error);
+        console.log(response);
+        console.log(body);
       }
     });
   },
