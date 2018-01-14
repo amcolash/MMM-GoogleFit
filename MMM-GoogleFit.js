@@ -5,7 +5,7 @@ Module.register("MMM-GoogleFit", {
   auth: undefined,
   code: undefined,
   defaults: {
-    updateInterval: 1800000, // 30 minutes
+    updateInterval: 30, // minutes
     imperial: true,
     stepGoal: 10000,
     colors: [
@@ -16,7 +16,7 @@ Module.register("MMM-GoogleFit", {
       "#FFB300",
       "#F4511E"
     ],
-    width: 300,
+    width: 300, // px
     fontSize: 18,
     debug: false
   },
@@ -215,7 +215,7 @@ Module.register("MMM-GoogleFit", {
   },
 
   scheduleUpdate: function(delay) {
-    var nextLoad = this.config.updateInterval;
+    var nextLoad = this.config.updateInterval * 60 * 1000;
     if (typeof delay !== "undefined" && delay >= 0) {
       nextLoad = delay;
     }
