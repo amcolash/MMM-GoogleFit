@@ -16,7 +16,7 @@ $ cd MagicMirror/modules
 $ git clone https://github.com/amcolash/MMM-GoogleFit.git
 ```
 
- Then add the following to `MagicMirror/config/config.js` and optionally configure any options (below).
+ Then add the following to `MagicMirror/config/config.js` and optionally configure any options [below](#configuration-options).
 ```
 {
     module: 'MMM-GoogleFit',
