@@ -4,6 +4,7 @@ Module.register("MMM-GoogleFit", {
 
   auth: undefined,
   code: undefined,
+  error: undefined,
   defaults: {
     updateInterval: 30, // minutes
     imperial: true,
@@ -21,8 +22,6 @@ Module.register("MMM-GoogleFit", {
     ],
     debug: false
   },
-
-  clientId: "846766038767-8fs63le8h45dhjpf0umhc1ai07q4rhn7.apps.googleusercontent.com",
 
   getScripts: function() {
     return [
@@ -252,7 +251,7 @@ Module.register("MMM-GoogleFit", {
       wrapper.appendChild(elem);
     } else {
       var error = document.createElement("span");
-      error.innerHTML = "Error Getting Auth";
+      error.innerHTML = "Error Getting Auth<br>" + this.error;
       wrapper.appendChild(error);
     }
 
@@ -285,6 +284,10 @@ Module.register("MMM-GoogleFit", {
       this.auth = result;
     } else if (notification === "STATS") {
       this.stats = result;
+    }
+
+    if (notification.toLowerCase().indexOf("error") !== -1) {
+      this.error = notification;
     }
 
     if (this.config.debug) {
