@@ -17,7 +17,8 @@ Module.register("MMM-GoogleFit", {
       "#F4511E"
     ],
     width: 300,
-    fontSize: 18
+    fontSize: 18,
+    debug: false
   },
 
   clientId: "846766038767-8fs63le8h45dhjpf0umhc1ai07q4rhn7.apps.googleusercontent.com",
@@ -105,9 +106,11 @@ Module.register("MMM-GoogleFit", {
         }
       }
 
-      console.log(weights);
-      console.log(steps);
-      console.log(dates);
+      if (this.config.debug) {
+        console.log(weights);
+        console.log(steps);
+        console.log(dates);
+      }
 
       var totalSize = this.config.width / 7;
       var chartSize = totalSize * 0.6;
@@ -200,7 +203,7 @@ Module.register("MMM-GoogleFit", {
       wrapper.appendChild(elem);
     } else if (this.auth) {
       var elem = document.createElement("span");
-      elem.innerHTML = "You are all authenticated";
+      elem.innerHTML = "Authenticated, Loading Data";
       wrapper.appendChild(elem);
     } else {
       var error = document.createElement("span");
@@ -228,20 +231,22 @@ Module.register("MMM-GoogleFit", {
   },
 
   socketNotificationReceived: function(notification, result) {
-    // this.code = undefined;
-    // this.result = undefined;
-
     if (notification === "AUTH_CODE_BODY") {
       this.code = result;
-      console.log("code: " + result.user_code)
+      if (this.config.debug) {
+        console.log("user code: " + result.user_code);
+      }
     } else if (notification === "REFRESH_TOKEN_BODY") {
       this.auth = result;
     } else if (notification === "STATS") {
       this.stats = result;
     }
 
-    console.log(notification);
-    console.log(result);
+    if (this.config.debug) {
+      console.log(notification);
+      console.log(result);
+    }
+
     this.updateDom(500);
   },
 
