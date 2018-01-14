@@ -9,7 +9,6 @@ module.exports = NodeHelper.create({
   client_id: "846766038767-8fs63le8h45dhjpf0umhc1ai07q4rhn7.apps.googleusercontent.com",
   client_secret: "kbJlTr7uQPCiClb5JSrGE-Ve",
   config: {
-    //device_code,
     //refresh_token
   },
 
@@ -38,9 +37,6 @@ module.exports = NodeHelper.create({
     request.post(url, { form: { client_id: self.client_id, scope: scopes } }, function(error, response, body) {
       if (!error && response.statusCode == 200) {
         var data = JSON.parse(body);
-        self.config.device_code = data.device_code;
-        self.writeConfig();
-
         self.tmpAuthData = data;
 
         self.sendSocketNotification("AUTH_CODE_BODY", data);
@@ -56,7 +52,7 @@ module.exports = NodeHelper.create({
     var url = "https://www.googleapis.com/oauth2/v4/token";
     var grant = "http://oauth.net/grant_type/device/1.0";
 
-    request.post(url, { form: { client_id: self.client_id, client_secret: self.client_secret, code: self.config.device_code, grant_type: grant } }, function (error, response, body) {
+    request.post(url, { form: { client_id: self.client_id, client_secret: self.client_secret, code: self.tmpAuthData.device_code, grant_type: grant } }, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         var data = JSON.parse(body);
         self.sendSocketNotification("REFRESH_TOKEN_BODY", data);
