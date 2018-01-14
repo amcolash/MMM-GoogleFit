@@ -96,10 +96,11 @@ module.exports = NodeHelper.create({
     var url = "https://www.googleapis.com/fitness/v1/users/me/dataset:aggregate";
 
     var startTime = new Date();
+    startTime.setDate(startTime.getDate() - startTime.getDay()); // get last sunday
     startTime.setHours(0, 0, 0, 0);
-    startTime.setDate(startTime.getDate() - 6); // go seven days back
 
     var endTime = new Date();
+    endTime.setDate(startTime.getDate() + 6);
     endTime.setHours(23, 59, 59, 999);
 
     var req = {

@@ -6,10 +6,27 @@ Module.register("MMM-GoogleFit", {
   code: undefined,
   defaults: {
     updateInterval: 1800000, // 30 minutes
-    imperial: true
+    imperial: true,
+    stepGoal: 10000,
+    colors: [
+      "#EEEEEE",
+      "#1E88E5",
+      "#9CCC65",
+      "#5E35B1",
+      "#FFB300",
+      "#F4511E"
+    ],
+    width: 300,
+    fontSize: 18
   },
 
   clientId: "846766038767-8fs63le8h45dhjpf0umhc1ai07q4rhn7.apps.googleusercontent.com",
+
+  getScripts: function() {
+    return [
+      this.file("highcharts.js")
+    ];
+  },
 
   start: function() {
     this.getStats();
@@ -25,25 +42,26 @@ Module.register("MMM-GoogleFit", {
     wrapper.appendChild(title);
 
     if (this.stats) {
+      var weights = [];
+      var steps = [];
+      var dates = [];
+
       for (var i = 0; i < this.stats.bucket.length; i++) {
         var bucket = this.stats.bucket[i];
         var elem = document.createElement("span");
 
+        dates.push(new Date(Number.parseFloat(bucket.startTimeMillis)).toLocaleDateString());
+
         for (var j = 0; j < bucket.dataset.length; j++) {
           var data = bucket.dataset[j];
 
-          var start = new Date(Number.parseFloat(bucket.startTimeMillis)).toLocaleDateString();
-          var value = start;
-
           var weight = false;
-          var steps = false;
+          var step = false;
 
           if (data.dataSourceId.indexOf("weight") != -1) {
-            value += ", weight: ";
             weight = true;
           } else if (data.dataSourceId.indexOf("step_count") != -1) {
-            value += ", steps: ";
-            steps = true;
+            step = true;
           }
 
           var total = 0;
@@ -73,25 +91,109 @@ Module.register("MMM-GoogleFit", {
 
               if (this.config.imperial) {
                 total *= 2.20462;
-                total = total.toFixed(2);
-                total += " lbs";
-              } else {
-                total = total.toFixed(2);
-                total += " kg";
               }
+
+              total = total.toFixed(0);
             } else {
               total = undefined;
             }
+
+            weights.push(total);
+          } else if (step) {
+            steps.push(total);
           }
+        }
+      }
 
-          value += total;
+      console.log(weights);
+      console.log(steps);
+      console.log(dates);
 
-          elem.innerHTML += value + ((j < bucket.dataset.length - 1) ? ", " : "");
+      var totalSize = this.config.width / 7;
+      var chartSize = totalSize * 0.6;
+      var colors = this.config.colors;
+
+      var series = [];
+      for (var i = 0; i < steps.length; i++) {
+        var percent = steps[i] / this.config.stepGoal;
+        var colorOffset = Math.floor(percent) % colors.length;
+
+        // 5x more than the desired step count is the last color (red) and will stay that way
+        if (percent > colors.length - 1) {
+          var data = [{
+            color: colors[colors.length - 1],
+            y: 1,
+          }];
+        } else {
+          percent -= Math.floor(percent);
+
+          var data = [{
+            color: colors[colorOffset + 1],
+            y: percent,
+          },
+          {
+            color: colors[colorOffset],
+            y: 1 - percent
+          }];
         }
 
-        elem.innerHTML += "<br>";
-        wrapper.appendChild(elem);
+        series.push({
+          type: "pie",
+          innerSize: "80%",
+          data: data,
+          size: chartSize,
+          center: [i * totalSize - (totalSize - chartSize) / 2, -(totalSize - chartSize) / 2],
+          borderColor: null,
+        });
       }
+        
+      // Create chart canvas
+      var chart = document.createElement("div");
+      
+      Highcharts.chart(chart, {
+        title: {
+          text: null
+        },
+        chart: {
+          width: this.config.width,
+          height: this.config.width / 7,
+          backgroundColor: null,
+          plotShadow: false,
+        },
+        plotOptions: {
+          pie: {
+            dataLabels: {
+              enabled: false
+            }
+          }
+        },
+        series: series,
+        credits: {
+          enabled: false
+        },
+      });
+        
+      // Append chart
+      wrapper.appendChild(chart);
+
+      var labels = document.createElement("div");
+      for (var i = 0; i < 7; i++) {
+        var label = document.createElement("div");
+        var style = "float: left; width: " + (this.config.width / 7) + "px; font-size: " + this.config.fontSize + "px; text-align: center;";
+        label.style = style;
+        // label.innerHTML = (steps[i] / this.config.stepGoal * 100).toFixed(0) + "%";
+        var days = ["S", "M", "T", "W", "T", "F", "S"];
+        label.innerHTML = days[i];
+
+        if (weights[i]) {
+          label.innerHTML += "<br>" + weights[i]
+        }
+
+        labels.appendChild(label);
+      }
+
+      wrapper.appendChild(labels);
+          
     } else if (this.code && !this.auth) {
       var elem = document.createElement("span");
       elem.innerHTML = "Please Visit: " + this.code.verification_url + "<br>" + "Code: " + this.code.user_code;
