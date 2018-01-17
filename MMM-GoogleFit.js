@@ -96,7 +96,7 @@ Module.register("MMM-GoogleFit", {
             if (data.point.length > 0) {
               total /= data.point.length;
 
-              if (this.config.imperial) {
+              if (config.units === "imperial") {
                 total *= 2.20462;
               }
 
