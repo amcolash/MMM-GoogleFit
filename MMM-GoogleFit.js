@@ -12,6 +12,7 @@ Module.register("MMM-GoogleFit", {
     chartWidth: 300, // px
     fontSize: 18,
     useIcons: true,
+    padding: 0.2, // percent between 0-1, clamped in code
     colors: [
       "#EEEEEE",
       "#1E88E5",
@@ -118,8 +119,13 @@ Module.register("MMM-GoogleFit", {
         console.log(dates);
       }
 
+      var min = 0.1;
+      var max = 0.9;
+      var t = Math.min(Math.max(this.config.padding, 0), 1);
+
+      var padding = min * (1 - t) + max * t;
       var totalSize = this.config.chartWidth / numDays;
-      var chartSize = totalSize * 0.6;
+      var chartSize = totalSize * (1 - padding);
       var colors = this.config.colors;
 
       var series = [];
@@ -151,7 +157,7 @@ Module.register("MMM-GoogleFit", {
           innerSize: "80%",
           data: data,
           size: chartSize,
-          center: [i * totalSize - (totalSize - chartSize) / 2, -(totalSize - chartSize) / 2],
+          center: [i * totalSize + 1, "50%"],
           borderColor: null,
         });
       }
@@ -179,9 +185,10 @@ Module.register("MMM-GoogleFit", {
         },
         chart: {
           width: this.config.chartWidth,
-          height: this.config.chartWidth / numDays,
+          height: totalSize,
           backgroundColor: null,
           plotShadow: false,
+          margin: 0
         },
         plotOptions: {
           pie: {
