@@ -25,7 +25,7 @@ Module.register("MMM-GoogleFit", {
 
   getScripts: function() {
     return [
-      this.file("highcharts.js")
+      this.file("lib/highcharts.js")
     ];
   },
 
@@ -162,7 +162,7 @@ Module.register("MMM-GoogleFit", {
         label.style = "float: left; width: " + totalSize + "px; text-align: center; line-height: 0px; padding-top: " + (totalSize / 2 - 10) + "px"; // 10 is 1/2 of 20px tall icon
 
         var img = document.createElement("img");
-        img.src = this.file("icons8-walking-20.png");
+        img.src = this.file("icons/icons8-walking-20.png");
 
         label.appendChild(img);
         wrapper.appendChild(label);
@@ -219,7 +219,7 @@ Module.register("MMM-GoogleFit", {
         br.innerHTML = "<br>";
         
         var img = document.createElement("img");
-        img.src = this.file("icons8-scale-20.png");
+        img.src = this.file("icons/icons8-scale-20.png");
 
         label.appendChild(br);
         label.appendChild(img);

@@ -1,6 +1,6 @@
 const NodeHelper = require("node_helper");
 const request = require("request");
-const jsonfile = require("./jsonfile.js");
+const jsonfile = require("./lib/jsonfile.js");
 const path = require("path");
 const dataFile = path.resolve(__dirname, "data.json");
 
