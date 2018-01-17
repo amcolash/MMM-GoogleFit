@@ -40,14 +40,17 @@ You will need to authenticate with google fit for this module to work. Follow th
 ## Configuration Options
 Below are listed all possible configuration options for this module.
 
+*SOME VALUES HAVE CHANGED SINCE THIS MODULE WAS FIRST PUBLISHED. CHECK YOUR CONFIG.*
+
 Note; If you want to use metric/imperial units for weights (or if they are not what you expect), please set the according units inside of your base `config/config.js` file as listed in the base magic mirror instructions.
 
 | Option         | Description                                                                                                                                                                                           |
 |----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | updateInterval | How often to update (in minutes) <br> <b>Possible values</b>: <code>int</code> <br> <b>Default value</b>: 30                                                                                          |
 | stepGoal       | How many steps you want to take each day (to fill pie chart) <br> <b>Possible values</b>: <code>int</code><br>Default value</b>: 10000                                                          |
-| chartWidth     | How wide the chart module should be (in pixels), excludes icons <br> <b>Possible values</b>: <code>int</code> <br> <b>Default value</b>: 300                                                                               |
-| chatrtpadding   | Percent of availible chart width dedicated to padding. If each ring takes 50px and there is 0.2 (percent) padding, then 10px are used for padding, making the chart 40px. <br> <b>Possible values</b>: <code>int (between 0 - 1)</code> <br> <b>Default value</b>: 0.2                                                                               |
+| chartWidth     | How wide the chart portion of the module should be (in pixels), excludes icons <br> <b>Possible values</b>: <code>int</code> <br> <b>Default value</b>: 300                                                                               |
+| chartPadding   | Percent of availible chart width dedicated to padding. If each ring takes 50px and there is 0.2 (percent) padding, then 10px are used for padding, making the chart 40px. <br> <b>Possible values</b>: <code>int (between 0 - 1)</code> <br> <b>Default value</b>: 0.2                                                                               |
+| innerThickness | How thick inside gap of the chart rings should be (percent), where 0 = no innner gap and 1 = only gap, no visible chart. <br> <b>Possible values</b>: <code>int (between 0 - 1)</code> <br> <b>Default value</b>: 0.8                                                                               | 
 | fontSize       | Font size <br> <b>Possible values</b>: <code>int</code> <br> <b>Default value</b>: 18                                                                                                                 |
 | useIcons       | Enable icons on the side of the module <br> <b>Possible values</b>: <code>boolean</code> <br> <b>Default value</b>: <code>true</code>                                                                                   |
 | colors         | Array of colors for the step counter <br> <b>Possible values</b>: <code>Array[#hexColor]</code> <br> <b>Default value</b>: <code>["#EEEEEE", "#1E88E5", "#9CCC65", "#5E35B1", "#FFB300", "#F4511E"]</code> |

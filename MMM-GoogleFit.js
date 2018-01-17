@@ -10,9 +10,10 @@ Module.register("MMM-GoogleFit", {
     imperial: true,
     stepGoal: 10000,
     chartWidth: 300, // px
+    chartPadding: 0.2, // percent between 0-1, clamped in code
+    innerThickness: 0.8, // how much like a pie chart / doughnut, clamped in code
     fontSize: 18,
     useIcons: true,
-    padding: 0.2, // percent between 0-1, clamped in code
     colors: [
       "#EEEEEE",
       "#1E88E5",
@@ -121,9 +122,10 @@ Module.register("MMM-GoogleFit", {
 
       var min = 0.1;
       var max = 0.9;
-      var t = Math.min(Math.max(this.config.padding, 0), 1);
-
+      var t = Math.min(Math.max(this.config.chartPadding, 0), 1);
       var padding = min * (1 - t) + max * t;
+      var thickness = Math.min(Math.max(this.config.innerThickness, 0), 1) * 100;
+
       var totalSize = this.config.chartWidth / numDays;
       var chartSize = totalSize * (1 - padding);
       var colors = this.config.colors;
@@ -154,7 +156,7 @@ Module.register("MMM-GoogleFit", {
 
         series.push({
           type: "pie",
-          innerSize: "80%",
+          innerSize: thickness + "%",
           data: data,
           size: chartSize,
           center: [i * totalSize + 1, "50%"],
