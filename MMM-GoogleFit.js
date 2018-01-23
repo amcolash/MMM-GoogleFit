@@ -7,8 +7,8 @@ Module.register("MMM-GoogleFit", {
   error: undefined,
   defaults: {
     updateInterval: 30, // minutes
-    imperial: true,
     stepGoal: 10000,
+    startOnMonday: false,
     chartWidth: 300, // px
     chartPadding: 0.2, // percent between 0-1, clamped in code
     innerThickness: 0.8, // how much like a pie chart / doughnut, clamped in code
@@ -49,6 +49,12 @@ Module.register("MMM-GoogleFit", {
       var steps = [];
       var dates = [];
       var hasWeights = false;
+
+      if (this.config.startOnMonday) {
+        this.stats.bucket = this.stats.bucket.slice(1, 8);
+      } else {
+        this.stats.bucket = this.stats.bucket.slice(0, 7);
+      }
 
       var numDays = this.stats.bucket.length; // should be 7
       if (numDays !== 7) {
@@ -235,7 +241,12 @@ Module.register("MMM-GoogleFit", {
         labels.appendChild(label);
       }
 
-      var days = ["S", "M", "T", "W", "T", "F", "S"];
+      if (this.config.startOnMonday) {
+        var days = ["M", "T", "W", "T", "F", "S", "S"];
+      } else {
+        var days = ["S", "M", "T", "W", "T", "F", "S"];
+      }
+
       for (var i = 0; i < numDays; i++) {
         var label = document.createElement("div");
         label.style = "float: left; width: " + totalSize + "px; font-size: " + this.config.fontSize + "px; text-align: center;";
