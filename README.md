@@ -42,7 +42,7 @@ Below are listed all possible configuration options for this module.
 
 *SOME VALUES HAVE CHANGED SINCE THIS MODULE WAS FIRST PUBLISHED. CHECK YOUR CONFIG.*
 
-Note; If you want to use metric/imperial units for weights (or if they are not what you expect), please set the according units inside of your base `config/config.js` file as listed in the base magic mirror instructions.
+Note; If you want to use metric/imperial units for weights (or if they are not what you expect), please set the according units inside of your base `config/config.js` file as listed in the magic mirror instructions [here](https://github.com/MichMich/MagicMirror#configuration).
 
 | Option         | Description                                                                                                                                                                                           |
 |----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
