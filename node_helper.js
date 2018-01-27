@@ -160,6 +160,8 @@ module.exports = NodeHelper.create({
         self.sendSocketNotification("STATS_ERROR", response);
         self.sendSocketNotification("STATS_ERROR", body);
       }
+
+      self.logRequest("getStats", error, response, body);
     });
   },
 
