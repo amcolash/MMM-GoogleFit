@@ -65,7 +65,7 @@ Module.register("MMM-GoogleFit", {
         var bucket = this.stats.bucket[i];
         var elem = document.createElement("span");
 
-        dates.push(new Date(Number.parseFloat(bucket.startTimeMillis)).toLocaleDateString());
+        dates.push(new Date(parseFloat(bucket.startTimeMillis)).toLocaleDateString());
 
         for (var j = 0; j < bucket.dataset.length; j++) {
           var data = bucket.dataset[j];
@@ -173,7 +173,7 @@ Module.register("MMM-GoogleFit", {
       // Add in walking icon
       if (this.config.useIcons) {
         var label = document.createElement("div");
-        label.style = "float: left; width: " + totalSize + "px; text-align: center; line-height: 0px; padding-top: " + (totalSize / 2 - 10) + "px"; // 10 is 1/2 of 20px tall icon
+        label.style.cssText = "float: left; width: " + totalSize + "px; text-align: center; line-height: 0px; padding-top: " + (totalSize / 2 - 10) + "px"; // 10 is 1/2 of 20px tall icon
 
         var img = document.createElement("img");
         img.src = this.file("icons/icons8-walking-20.png");
@@ -185,7 +185,7 @@ Module.register("MMM-GoogleFit", {
       // Create chart canvas
       var chart = document.createElement("div");
       chart.id = "google-fit-chart";
-      chart.style = "float: right;";
+      chart.style.cssText = "float: right;";
       
       Highcharts.chart(chart, {
         title: {
@@ -215,11 +215,11 @@ Module.register("MMM-GoogleFit", {
       wrapper.appendChild(chart);
 
       var clear = document.createElement("div");
-      clear.style = "clear: both;";
+      clear.style.cssText = "clear: both;";
       wrapper.appendChild(clear);
 
       var labels = document.createElement("div");
-      labels.style = "float: right;";
+      labels.style.cssText = "float: right;";
 
       for (var i = 0; i < weights.length; i++) {
         hasWeights |= weights[i];
@@ -228,7 +228,7 @@ Module.register("MMM-GoogleFit", {
       // Only show the scale icon if there are weights to be shown
       if (hasWeights && this.config.useIcons) {
         var label = document.createElement("div");
-        label.style = "float: left; width: " + totalSize + "px; font-size: " + this.config.fontSize + "px; text-align: center; padding-top: 4px";
+        label.style.cssText = "float: left; width: " + totalSize + "px; font-size: " + this.config.fontSize + "px; text-align: center; padding-top: 4px";
 
         var br = document.createElement("span");
         br.innerHTML = "<br>";
@@ -249,7 +249,7 @@ Module.register("MMM-GoogleFit", {
 
       for (var i = 0; i < numDays; i++) {
         var label = document.createElement("div");
-        label.style = "float: left; width: " + totalSize + "px; font-size: " + this.config.fontSize + "px; text-align: center;";
+        label.style.cssText = "float: left; width: " + totalSize + "px; font-size: " + this.config.fontSize + "px; text-align: center;";
         label.innerHTML = days[i];
 
         if (weights[i]) {
