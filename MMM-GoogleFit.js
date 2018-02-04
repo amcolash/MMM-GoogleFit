@@ -294,6 +294,11 @@ Module.register("MMM-GoogleFit", {
     this.sendSocketNotification("UPDATE");
   },
 
+  capitalize: function (s) {
+    s = s.replace(/_/g, " ");
+    return s.toLowerCase().replace(/\b./g, function (a) { return a.toUpperCase(); });
+  },
+
   socketNotificationReceived: function(notification, result) {
     if (notification === "AUTH_CODE_BODY") {
       this.code = result;
@@ -307,7 +312,10 @@ Module.register("MMM-GoogleFit", {
     }
 
     if (notification.toLowerCase().indexOf("error") !== -1) {
-      this.error = notification;
+      this.auth = undefined;
+      this.stats = undefined;
+
+      this.error = this.capitalize(notification);
     }
 
     if (this.config.debug) {
