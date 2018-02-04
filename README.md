@@ -56,6 +56,10 @@ Note; If you want to use metric/imperial units for weights (or if they are not w
 | useIcons       | Enable icons on the side of the module <br> <b>Possible values</b>: <code>boolean</code> <br> <b>Default value</b>: <code>true</code>                                                                                   |
 | colors         | Array of colors for the step counter <br> <b>Possible values</b>: <code>Array[#hexColor]</code> <br> <b>Default value</b>: <code>["#EEEEEE", "#1E88E5", "#9CCC65", "#5E35B1", "#FFB300", "#F4511E"]</code> |
 | debug          | Turn on debug mode? <br> <b>Possible values</b>: <code>boolean</code> <br> <b>Default value</b>: <code>false</code>                                                                                   |
+
+## Multiple Instances of the Module
+This module _can_ be used multiple times on the mirror (for different users) with some work, however this is not fully supported out of the box. Check out this [github issue](https://github.com/amcolash/MMM-GoogleFit/issues/3) for instructions.
+
 ## Libraries Used
 This module (like most open source) has some help from others, shoutout to the authors and contributors! Cheers
 - Beautiful and responsive charts from [HighCharts](https://www.highcharts.com)
