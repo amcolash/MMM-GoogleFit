@@ -13,6 +13,7 @@ Module.register("MMM-GoogleFit", {
     chartPadding: 0.2, // percent between 0-1, clamped in code
     innerThickness: 0.8, // how much like a pie chart / doughnut, clamped in code
     fontSize: 18,
+    stepCountLabel: false,
     useIcons: true,
     colors: [
       "#EEEEEE",
@@ -231,7 +232,7 @@ Module.register("MMM-GoogleFit", {
         label.style.cssText = "float: left; width: " + totalSize + "px; font-size: " + this.config.fontSize + "px; text-align: center; padding-top: 4px";
 
         var br = document.createElement("span");
-        br.innerHTML = "<br>";
+        br.innerHTML = "<br>" + (this.config.stepCountLabel ? "<br>" : "");
         
         var img = document.createElement("img");
         img.src = this.file("icons/icons8-scale-20.png");
@@ -251,6 +252,13 @@ Module.register("MMM-GoogleFit", {
         var label = document.createElement("div");
         label.style.cssText = "float: left; width: " + totalSize + "px; font-size: " + this.config.fontSize + "px; text-align: center;";
         label.innerHTML = days[i];
+
+        if (this.config.stepCountLabel && steps[i] > 0) {
+          var s = steps[i] / 1000;
+          s = Number(s).toFixed(s < 10 ? 1 : 0);
+
+          label.innerHTML += "<br>" + s + "k";
+        }
 
         if (weights[i]) {
           label.innerHTML += "<br>" + weights[i];
