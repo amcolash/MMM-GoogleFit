@@ -51,12 +51,6 @@ Module.register("MMM-GoogleFit", {
       var dates = [];
       var hasWeights = false;
 
-      if (this.config.startOnMonday) {
-        this.stats.bucket = this.stats.bucket.slice(1, 8);
-      } else {
-        this.stats.bucket = this.stats.bucket.slice(0, 7);
-      }
-
       var numDays = this.stats.bucket.length; // should be 7
       if (numDays !== 7) {
         console.error("Google Fit data fetched does not match 7 days, layout might be incorrect");
@@ -299,7 +293,7 @@ Module.register("MMM-GoogleFit", {
   },
 
   getStats: function () {
-    this.sendSocketNotification("UPDATE");
+    this.sendSocketNotification("UPDATE", this.config.startOnMonday);
   },
 
   capitalize: function (s) {

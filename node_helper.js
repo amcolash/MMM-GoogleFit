@@ -79,7 +79,7 @@ module.exports = NodeHelper.create({
     });
   },
 
-  getAccessToken: function() {
+  getAccessToken: function(monday) {
     var self = this;
     var url = "https://www.googleapis.com/oauth2/v4/token";
     var grant = "refresh_token";
@@ -90,7 +90,7 @@ module.exports = NodeHelper.create({
         self.sendSocketNotification("ACCESS_TOKEN_BODY", data);
         self.tmpAccessToken = data;
 
-        self.getStats();
+        self.getStats(monday);
       } else {
         self.sendSocketNotification("ACCESS_TOKEN_ERROR", response);
       }
@@ -112,19 +112,25 @@ module.exports = NodeHelper.create({
     }
   },
 
-  getStats: function (url) {
+  getStats: function (monday) {
     var self = this;
     // self.sendSocketNotification("STATS", self.debugData);
     // return;
 
     var url = "https://www.googleapis.com/fitness/v1/users/me/dataset:aggregate";
 
-    var startTime = new Date();
-    startTime.setDate(startTime.getDate() - startTime.getDay()); // get last sunday
-    startTime.setHours(0, 0, 0, 0);
+    var now = new Date();
 
-    var endTime = new Date();
-    endTime.setDate(startTime.getDate() + 7); // get 7 days after, we then will filter to 1 week (from 8 days)
+    var startTime = new Date();
+    startTime.setDate(now.getDate() - now.getDay()); // get last sunday
+    startTime.setHours(0, 0, 0, 0);
+    
+    if (monday) { // start on monday instead
+      startTime.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+    }
+
+    var endTime = new Date(); // continue on until today (range of 7-13 days of data, I think)
+    endTime.setDate(startTime.getDate() + 6);
     endTime.setHours(23, 59, 59, 999);
 
     var req = {
@@ -174,7 +180,7 @@ module.exports = NodeHelper.create({
     if (notification === "UPDATE") {
       if (this.config.refresh_token) {
         this.sendSocketNotification("REFRESH_TOKEN_BODY", this.config.refresh_token);
-        this.getAccessToken(); // This will get an access token and then get stats afterwards if successful
+        this.getAccessToken(payload); // This will get an access token and then get stats afterwards if successful (payload is if we want last monday/sunday)
       } else if (this.tmpAuthData) {
         // Just in case refreshing the page before auth complete
         this.sendSocketNotification("AUTH_CODE_BODY", this.tmpAuthData);
