@@ -50,15 +50,17 @@ Module.register("MMM-GoogleFit", {
       var steps = [];
       var dates = [];
       var hasWeights = false;
+      
 
-      var numDays = this.stats.bucket.length; // should be 7
-      if (numDays !== 7) {
-        console.error("Google Fit data fetched does not match 7 days, layout might be incorrect");
+      if (this.stats.bucket.length !== 7) {
+        console.error("Google Fit data fetched does not match 7 days, layout might be incorrect. Data was trimmed.");
+        this.stats.bucket = this.stats.bucket.slice(0, 7);
       }
+
+      var numDays = this.stats.bucket.length; // should be 7?
 
       for (var i = 0; i < this.stats.bucket.length; i++) {
         var bucket = this.stats.bucket[i];
-        var elem = document.createElement("span");
 
         dates.push(new Date(parseFloat(bucket.startTimeMillis)).toLocaleDateString());
 

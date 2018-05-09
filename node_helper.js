@@ -129,7 +129,7 @@ module.exports = NodeHelper.create({
       startTime.setDate(now.getDate() - ((now.getDay() + 6) % 7));
     }
 
-    var endTime = new Date(); // continue on until today (range of 7-13 days of data, I think)
+    var endTime = new Date(startTime); // end sets month of start (Issue #9)
     endTime.setDate(startTime.getDate() + 6);
     endTime.setHours(23, 59, 59, 999);
 
