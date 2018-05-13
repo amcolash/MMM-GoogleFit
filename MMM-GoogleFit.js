@@ -15,6 +15,7 @@ Module.register("MMM-GoogleFit", {
     fontSize: 18,
     stepCountLabel: false,
     useIcons: true,
+    displayWeight: true,
     colors: [
       "#EEEEEE",
       "#1E88E5",
@@ -295,7 +296,7 @@ Module.register("MMM-GoogleFit", {
   },
 
   getStats: function () {
-    this.sendSocketNotification("UPDATE", this.config.startOnMonday);
+    this.sendSocketNotification("UPDATE", this.config);
   },
 
   capitalize: function (s) {

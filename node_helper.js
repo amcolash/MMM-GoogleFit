@@ -79,7 +79,7 @@ module.exports = NodeHelper.create({
     });
   },
 
-  getAccessToken: function(monday) {
+  getAccessToken: function(clientConfig) {
     var self = this;
     var url = "https://www.googleapis.com/oauth2/v4/token";
     var grant = "refresh_token";
@@ -90,7 +90,7 @@ module.exports = NodeHelper.create({
         self.sendSocketNotification("ACCESS_TOKEN_BODY", data);
         self.tmpAccessToken = data;
 
-        self.getStats(monday);
+        self.getStats(clientConfig);
       } else {
         self.sendSocketNotification("ACCESS_TOKEN_ERROR", response);
       }
@@ -112,7 +112,7 @@ module.exports = NodeHelper.create({
     }
   },
 
-  getStats: function (monday) {
+  getStats: function (clientConfig) {
     var self = this;
     // self.sendSocketNotification("STATS", self.debugData);
     // return;
@@ -125,7 +125,7 @@ module.exports = NodeHelper.create({
     startTime.setDate(now.getDate() - now.getDay()); // get last sunday
     startTime.setHours(0, 0, 0, 0);
     
-    if (monday) { // start on monday instead
+    if (clientConfig.startOnMonday) { // start on monday instead
       startTime.setDate(now.getDate() - ((now.getDay() + 6) % 7));
     }
 
@@ -134,20 +134,19 @@ module.exports = NodeHelper.create({
     endTime.setHours(23, 59, 59, 999);
 
     var req = {
-      "aggregateBy": [
-        {
-          "dataTypeName": "com.google.step_count.delta",
-          "dataSourceId": "derived:com.google.step_count.delta:com.google.android.gms:estimated_steps"
-        },
-        {
-          "dataTypeName": "com.google.weight",
-          "dataSourceId": "derived:com.google.weight:com.google.android.gms:merge_weight"
-        }
-      ],
+      "aggregateBy": [{
+        "dataSourceId": "derived:com.google.step_count.delta:com.google.android.gms:estimated_steps"
+      }],
       "bucketByTime": { "durationMillis": 86400000 }, // 1 day per bucket
       "startTimeMillis": startTime.getTime(),
       "endTimeMillis": endTime.getTime()
     };
+
+    if (clientConfig.displayWeight) {
+      req.aggregateBy.push({
+        "dataSourceId": "derived:com.google.weight:com.google.android.gms:merge_weight"
+      });
+    }
 
     var options = {
       url: url,
