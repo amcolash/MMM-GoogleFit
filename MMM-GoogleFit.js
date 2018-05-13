@@ -43,7 +43,7 @@ Module.register("MMM-GoogleFit", {
     wrapper.className = "dimmed small";
 
     var title =  document.createElement("header");
-    title.innerHTML = "Google Fit";
+    title.innerHTML = "Google Fit";    
     wrapper.appendChild(title);
 
     if (this.stats) {
@@ -168,6 +168,9 @@ Module.register("MMM-GoogleFit", {
         });
       }
 
+      var chartWrapper = document.createElement("div");
+      chartWrapper.style.cssText = "float: right;";
+
       // Add in walking icon
       if (this.config.useIcons) {
         var label = document.createElement("div");
@@ -177,7 +180,7 @@ Module.register("MMM-GoogleFit", {
         img.src = this.file("icons/icons8-walking-20.png");
 
         label.appendChild(img);
-        wrapper.appendChild(label);
+        chartWrapper.appendChild(label);
       }
         
       // Create chart canvas
@@ -210,7 +213,8 @@ Module.register("MMM-GoogleFit", {
       });
         
       // Append chart
-      wrapper.appendChild(chart);
+      chartWrapper.appendChild(chart);
+      wrapper.appendChild(chartWrapper);
 
       var clear = document.createElement("div");
       clear.style.cssText = "clear: both;";
