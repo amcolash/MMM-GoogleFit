@@ -43,7 +43,7 @@ Module.register("MMM-GoogleFit", {
     wrapper.className = "dimmed small";
 
     var title =  document.createElement("header");
-    title.innerHTML = "Google Fit";    
+    title.innerHTML = "Google Fit";
     wrapper.appendChild(title);
 
     if (this.stats) {
@@ -51,7 +51,7 @@ Module.register("MMM-GoogleFit", {
       var steps = [];
       var dates = [];
       var hasWeights = false;
-      
+
 
       if (this.stats.bucket.length !== 7) {
         console.error("Google Fit data fetched does not match 7 days, layout might be incorrect. Data was trimmed.");
@@ -182,12 +182,12 @@ Module.register("MMM-GoogleFit", {
         label.appendChild(img);
         chartWrapper.appendChild(label);
       }
-        
+
       // Create chart canvas
       var chart = document.createElement("div");
       chart.id = "google-fit-chart";
       chart.style.cssText = "float: right;";
-      
+
       Highcharts.chart(chart, {
         title: {
           text: null
@@ -211,7 +211,7 @@ Module.register("MMM-GoogleFit", {
           enabled: false
         },
       });
-        
+
       // Append chart
       chartWrapper.appendChild(chart);
       wrapper.appendChild(chartWrapper);
@@ -234,7 +234,7 @@ Module.register("MMM-GoogleFit", {
 
         var br = document.createElement("span");
         br.innerHTML = "<br>" + (this.config.stepCountLabel ? "<br>" : "");
-        
+
         var img = document.createElement("img");
         img.src = this.file("icons/icons8-scale-20.png");
 
@@ -269,7 +269,7 @@ Module.register("MMM-GoogleFit", {
       }
 
       wrapper.appendChild(labels);
-          
+
     } else if (this.code && !this.auth) {
       var elem = document.createElement("span");
       elem.innerHTML = "Please Visit: " + this.code.verification_url + "<br>" + "Code: " + this.code.user_code;
