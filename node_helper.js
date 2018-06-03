@@ -14,6 +14,7 @@ module.exports = NodeHelper.create({
   },
 
   debug: false,
+  useDebugData: false,
 
   tmpAuthData: undefined,
   tmpAccessToken: undefined,
@@ -115,19 +116,20 @@ module.exports = NodeHelper.create({
 
   getStats: function (clientConfig) {
     var self = this;
-    // self.sendSocketNotification("STATS", self.debugData);
-    // return;
+
+    if (this.useDebugData) {
+      self.sendSocketNotification("STATS", debugData);
+      return;
+    }
 
     var url = "https://www.googleapis.com/fitness/v1/users/me/dataset:aggregate";
 
-    var now = new Date();
-
     var startTime = new Date();
-    startTime.setDate(now.getDate() - now.getDay()); // get last sunday
+    startTime.setDate(startTime.getDate() - startTime.getDay()); // get last sunday
     startTime.setHours(0, 0, 0, 0);
-    
+
     if (clientConfig.startOnMonday) { // start on monday instead
-      startTime.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+      startTime.setDate(startTime.getDate() + 1);
     }
 
     var endTime = new Date(startTime); // end sets month of start (Issue #9)
