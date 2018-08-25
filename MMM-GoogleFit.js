@@ -9,6 +9,7 @@ Module.register("MMM-GoogleFit", {
     updateInterval: 30, // minutes
     stepGoal: 10000,
     startOnMonday: false,
+    lastSevenDays: false,
     chartWidth: 300, // px
     chartPadding: 0.2, // percent between 0-1, clamped in code
     innerThickness: 0.8, // how much like a pie chart / doughnut, clamped in code
@@ -50,6 +51,7 @@ Module.register("MMM-GoogleFit", {
       var weights = [];
       var steps = [];
       var dates = [];
+      var days = this.stats.days;
       var hasWeights = false;
 
 
@@ -122,6 +124,7 @@ Module.register("MMM-GoogleFit", {
         console.log(weights);
         console.log(steps);
         console.log(dates);
+        console.log(days);
       }
 
       var min = 0.1;
@@ -241,12 +244,6 @@ Module.register("MMM-GoogleFit", {
         label.appendChild(br);
         label.appendChild(img);
         labels.appendChild(label);
-      }
-
-      if (this.config.startOnMonday) {
-        var days = ["M", "T", "W", "T", "F", "S", "S"];
-      } else {
-        var days = ["S", "M", "T", "W", "T", "F", "S"];
       }
 
       for (var i = 0; i < numDays; i++) {

@@ -132,9 +132,26 @@ module.exports = NodeHelper.create({
       startTime.setDate(startTime.getDate() + 1);
     }
 
+    if (clientConfig.lastSevenDays) {
+      startTime.setDate(new Date().getDate() - 6);
+    }
+
     var endTime = new Date(startTime); // end sets month of start (Issue #9)
     endTime.setDate(startTime.getDate() + 6);
     endTime.setHours(23, 59, 59, 999);
+
+    var rotate = 0;
+    if (clientConfig.lastSevenDays) {
+      rotate = new Date().getDay() + 1;
+    } else if (clientConfig.startOnMonday) {
+      rotate = 1;
+    }
+
+    var days = ["S", "M", "T", "W", "T", "F", "S"];
+    if (rotate != 0) {
+      rotate %= days.length;
+      days = days.slice(rotate, days.length).concat(days.slice(0, rotate));
+    }
 
     var req = {
       "aggregateBy": [{
@@ -162,6 +179,7 @@ module.exports = NodeHelper.create({
     request.post(options, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         // body is already json at this point
+        body.days = days;
         self.sendSocketNotification("STATS", body);
       } else {
         self.sendSocketNotification("STATS_ERROR", error);
