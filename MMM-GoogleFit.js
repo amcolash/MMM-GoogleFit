@@ -10,6 +10,7 @@ Module.register("MMM-GoogleFit", {
     stepGoal: 10000,
     startOnMonday: false,
     lastSevenDays: false,
+    reverseOrder: false,
     chartWidth: 300, // px
     chartPadding: 0.2, // percent between 0-1, clamped in code
     innerThickness: 0.8, // how much like a pie chart / doughnut, clamped in code
@@ -120,6 +121,13 @@ Module.register("MMM-GoogleFit", {
         }
       }
 
+      if (this.config.reverseOrder) {
+        weights = weights.reverse();
+        steps = steps.reverse();
+        dates = dates.reverse();
+        days = days.reverse();
+      }
+
       if (this.config.debug) {
         console.log(weights);
         console.log(steps);
@@ -206,6 +214,11 @@ Module.register("MMM-GoogleFit", {
           pie: {
             dataLabels: {
               enabled: false
+            },
+            states: {
+              hover: {
+                enabled: false
+              }
             }
           }
         },
@@ -213,6 +226,9 @@ Module.register("MMM-GoogleFit", {
         credits: {
           enabled: false
         },
+        tooltip: {
+          enabled: false
+        }
       });
 
       // Append chart

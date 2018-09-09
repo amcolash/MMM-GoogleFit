@@ -72,7 +72,10 @@ module.exports = NodeHelper.create({
 
         self.getAccessToken();
       } else {
-        console.error(response)
+        if (self.debug) {
+          console.error(response)
+        }
+        
         self.sendSocketNotification("REFRESH_TOKEN_ERROR", response);
         setTimeout(function() { self.getRefreshToken() }, 10000);
       }
