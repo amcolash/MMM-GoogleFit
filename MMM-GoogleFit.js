@@ -282,6 +282,9 @@ Module.register("MMM-GoogleFit", {
       }
 
       wrapper.appendChild(labels);
+      // Make sure all labels clear the border
+      wrapper.appendChild(clear);
+
 
     } else if (this.code && !this.auth) {
       var elem = document.createElement("span");
