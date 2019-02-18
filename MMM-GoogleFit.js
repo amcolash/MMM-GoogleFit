@@ -235,9 +235,9 @@ Module.register("MMM-GoogleFit", {
       chartWrapper.appendChild(chart);
       wrapper.appendChild(chartWrapper);
 
-      var clear = document.createElement("div");
-      clear.style.cssText = "clear: both;";
-      wrapper.appendChild(clear);
+      var clear1 = document.createElement("div");
+      clear1.style.cssText = "clear: both;";
+      wrapper.appendChild(clear1);
 
       var labels = document.createElement("div");
       labels.style.cssText = "float: right;";
@@ -282,6 +282,10 @@ Module.register("MMM-GoogleFit", {
       }
 
       wrapper.appendChild(labels);
+
+      var clear2 = document.createElement("div");
+      clear2.style.cssText = "clear: both;";
+      wrapper.appendChild(clear2);
 
     } else if (this.code && !this.auth) {
       var elem = document.createElement("span");
