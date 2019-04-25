@@ -10,6 +10,7 @@ Module.register("MMM-GoogleFit", {
     stepGoal: 10000,
     startOnMonday: false,
     lastSevenDays: false,
+    showRealSteps: false,
     reverseOrder: false,
     chartWidth: 300, // px
     chartPadding: 0.2, // percent between 0-1, clamped in code
@@ -266,18 +267,25 @@ Module.register("MMM-GoogleFit", {
         var label = document.createElement("div");
         label.style.cssText = "float: left; width: " + totalSize + "px; font-size: " + this.config.fontSize + "px; text-align: center;";
         label.innerHTML = days[i];
-
+		
         if (this.config.stepCountLabel && steps[i] > 0) {
-          var s = steps[i] / 1000;
+          if (this.config.showRealSteps) {
+            var s = steps[i];
+          }
+          else {
+            var s = steps[i] / 1000;
+          }          
           s = Number(s).toFixed(s < 10 ? 1 : 0);
-
-          label.innerHTML += "<br>" + s + "k";
+          if (this.config.showRealSteps) {
+            label.innerHTML += "<br>" + s;
+          }
+          else {
+            label.innerHTML += "<br>" + s + "k";
+          }          
         }
-
         if (weights[i]) {
           label.innerHTML += "<br>" + weights[i];
         }
-
         labels.appendChild(label);
       }
 
