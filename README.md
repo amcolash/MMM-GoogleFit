@@ -67,6 +67,27 @@ Note; If you want to use metric/imperial units for weights (or if they are not w
 | colors         | Array of colors for the step counter <br> <b>Possible values</b>: <code>Array[#hexColor]</code> <br> <b>Default value</b>: <code>["#EEEEEE", "#1E88E5", "#9CCC65", "#5E35B1", "#FFB300", "#F4511E"]</code> |
 | debug          | Turn on debug mode? <br> <b>Possible values</b>: <code>boolean</code> <br> <b>Default value</b>: <code>false</code>                                                                                   |
 
+Example of ``config.js``:
+```
+{
+	module: 'MMM-GoogleFit',
+	position: 'top_right',
+	config: {
+		startOnMonday: true,
+		stepCountLabel: true,
+		showRealSteps: true,
+		displayDays: ["L", "M", "X", "J", "V", "S", "D"],
+		updateInterval: 15,
+		colors: ["#EEEEEE", "#1E88E5", "#9CCC65", "#5E35B1", "#FFB300", "#F4511E"],
+		displayWeight: true,
+		}
+},
+```
+Those settings will display the module as follows:
+ 
+![Example featuring day label change](https://raw.githubusercontent.com/ferferga/MMM-GoogleFit/master/screenshots/RealSteps_and_DayLabels.png)
+
+
 ## Multiple Instances of the Module
 This module _can_ be used multiple times on the mirror (for different users) with some work, however this is not fully supported out of the box. Check out this [github issue](https://github.com/amcolash/MMM-GoogleFit/issues/3) for instructions.
 
