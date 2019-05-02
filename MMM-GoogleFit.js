@@ -12,6 +12,7 @@ Module.register("MMM-GoogleFit", {
     lastSevenDays: false,
     showRealSteps: false,
     reverseOrder: false,
+	displayDays: ["M", "T", "W", "T", "F", "S", "S"],
     chartWidth: 300, // px
     chartPadding: 0.2, // percent between 0-1, clamped in code
     innerThickness: 0.8, // how much like a pie chart / doughnut, clamped in code
@@ -53,7 +54,7 @@ Module.register("MMM-GoogleFit", {
       var weights = [];
       var steps = [];
       var dates = [];
-      var days = this.stats.days;
+      var days = this.config.displayDays;
       var hasWeights = false;
 
 
