@@ -16,7 +16,7 @@ Module.register("MMM-GoogleFit", {
     chartWidth: 300, // px
     chartPadding: 0.2, // percent between 0-1, clamped in code
     innerThickness: 0.8, // how much like a pie chart / doughnut, clamped in code
-    fontSize: 18,
+    fontSize: 15,
     stepCountLabel: false,
     useIcons: true,
     displayWeight: true,
