@@ -3,6 +3,8 @@ A magic mirror module to grab google fit daily step count and daily weights.
 
 ![status](https://img.shields.io/badge/status-not%20maintained-red.svg)
 
+# This module is not maintained and will not recieve any support from me.
+
 ## What it Looks Like
 Normal Usage:<br>
 ![Normal use screenshot](https://raw.githubusercontent.com/amcolash/MMM-GoogleFit/master/screenshots/normal.png)
