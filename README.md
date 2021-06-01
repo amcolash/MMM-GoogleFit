@@ -54,6 +54,8 @@ Note; If you want to use metric/imperial units for weights (or if they are not w
 | stepGoal       | How many steps you want to take each day (to fill pie chart) <br> <b>Possible values</b>: <code>number</code><br>Default value</b>: 10000                                                          |
 | startOnMonday  | If the calendar view should start on Sunday (default) or Monday. <br> <b>Possible values</b>: <code>boolean</code><br>Default value</b>: `false`                                                          |
 | lastSevenDays  | If the calendar view should show the last 7 days or if it should show the current week (default). Note: This setting takes priority over `startOnMonday`. <br> <b>Possible values</b>: <code>boolean</code><br>Default value</b>: `false`                                                          |
+| showRealSteps  | If you want to see the exact number of steps, set this to ``true``. Setting this to ``false`` will show your steps > 1000 prefixed with a *k*.<br>**Default value**: ``false``	|
+| displayDays    | An array that changes the labels of the week days, useful if the day's initials are different from the English ones in your language.<br>**Default value**: ``["M", "T", "W", "T", "F", "S", "S"]``	|
 | reverseOrder   | Reverses the calendar view ordering - so the last day is on the left instead of the right. <br> <b>Possible values</b>: <code>boolean</code><br>Default value</b>: `false`                                                          |
 | displayWeight  | If the module should show weight data. <br> <b>Possible values</b>: <code>boolean</code><br>Default value</b>: `true`                                                          |
 | chartWidth     | How wide the chart portion of the module should be (in pixels), excludes icons <br> <b>Possible values</b>: <code>number</code> <br> <b>Default value</b>: 300                                                                               |
@@ -64,6 +66,27 @@ Note; If you want to use metric/imperial units for weights (or if they are not w
 | useIcons       | Enable icons on the side of the module <br> <b>Possible values</b>: <code>boolean</code> <br> <b>Default value</b>: <code>true</code>                                                                                   |
 | colors         | Array of colors for the step counter <br> <b>Possible values</b>: <code>Array[#hexColor]</code> <br> <b>Default value</b>: <code>["#EEEEEE", "#1E88E5", "#9CCC65", "#5E35B1", "#FFB300", "#F4511E"]</code> |
 | debug          | Turn on debug mode? <br> <b>Possible values</b>: <code>boolean</code> <br> <b>Default value</b>: <code>false</code>                                                                                   |
+
+Example of ``config.js``:
+```
+{
+	module: 'MMM-GoogleFit',
+	position: 'top_right',
+	config: {
+		startOnMonday: true,
+		stepCountLabel: true,
+		showRealSteps: true,
+		displayDays: ["L", "M", "X", "J", "V", "S", "D"],
+		updateInterval: 15,
+		colors: ["#EEEEEE", "#1E88E5", "#9CCC65", "#5E35B1", "#FFB300", "#F4511E"],
+		displayWeight: true,
+		}
+},
+```
+Those settings will display the module as follows:
+ 
+![Example featuring day label change](https://raw.githubusercontent.com/ferferga/MMM-GoogleFit/master/screenshots/RealSteps_and_DayLabels.png)
+
 
 ## Multiple Instances of the Module
 This module _can_ be used multiple times on the mirror (for different users) with some work, however this is not fully supported out of the box. Check out this [github issue](https://github.com/amcolash/MMM-GoogleFit/issues/3) for instructions.
